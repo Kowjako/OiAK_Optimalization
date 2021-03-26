@@ -33,6 +33,9 @@ class bstTree
         void showTree(nodeBST* startNode, long n); //funkcja wypisujaca drzewo w konsoli
         void readFromFile(string filename);  //funkcja wczytujaca drzewo z pliku.
 
+        void leftRotation(nodeBST* root);   //funkcja rotacji w lewo
+        void rightRotation(nodeBST* root);  //funkcja rotacji w prawo
+
         void showInorder(nodeBST* root);    //przejscie drzewa metoda INORDER
         void showPreorder(nodeBST* root);   //przejscie drzewa metoda PREORDER
         void showPostorder(nodeBST* root);    //prejscie drzewa metoda PREORDER

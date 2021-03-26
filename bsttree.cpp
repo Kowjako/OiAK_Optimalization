@@ -188,7 +188,71 @@ void bstTree::deletePtr(nodeBST* deletedNode) {
     free(deletedNode);
 }
 
-void
+void bstTree::leftRotation(nodeBST* rotRoot) {
+    nodeBST* parent = NULL;
+    nodeBST* a = NULL; //wezel rotacji
+    nodeBST* b = NULL; //prawy potomek
+    nodeBST* c = NULL; //lewy potomek prawego potomka
+    /** Ustawianie adresow **/
+    a = rotRoot; //wezel odnosnie ktorego bedzie rotacja
+    parent = a->parentItem; //rodzic wezla rotacji
+    b = a->rightItem;   //prawy potomek wezla rotacji
+    if(b == NULL) {
+        return;     //lewa rotacja niemozliwa gdy nie ma prawego potomka
+    }
+    c = b->leftItem;    //lewy potomek prawego potomka wezla rotacji
+    /** Rotacja **/
+    b->leftItem = a;    //po rotacji A bedzie lewym potomkiem B
+    if(c!=NULL) {
+        c->parentItem = a;  //jezeli C nie jest NULL ustawiamy dla nowego rodzica dla tego wezla
+        a->rightItem = c; //po rotacji c bedzie prawym potomkiem dla A
+    }
+    else a->rightItem = NULL; //jezeli nie bylo C to po rotacji dla A prawego potomka nie bedzie
+    b->parentItem = parent;     //B teraz zamiast a wiec teraz b bedzie wskazywal na rodzica wezla rotacji
+    if(parent!=NULL) {  //jezeli A nie bylo korzeniem drzewa
+        if(parent->leftItem == a) { //sprawdzamy jakim potomkiem byl poczatkowy wezel rotacji
+            parent->leftItem = b;
+        }
+        else parent->rightItem = b;
+    }
+    a->parentItem = b;      //aktualizujemy rodzica A bo teraz jego rodzicem jest B
+    if(parent==NULL) {
+        root = b;   //jezeli A byl korzeniem to teraz po rotacji korzeniem bedzie B
+    }
+}
+
+void bstTree::rightRotation(nodeBST* rotRoot) {
+    nodeBST* parent;
+    nodeBST* a; //wezel rotacji
+    nodeBST* b; //lewy potomek
+    nodeBST* c; //prawy potomek lewego potomka
+    /** Ustawianie adresow **/
+    a = rotRoot; //wezel odnosnie ktorego bedzie rotacja
+    parent = a->parentItem; //rodzic wezla rotacji
+    b = a->leftItem;   //lewypotomek wezla rotacji
+    if(b == NULL) {
+        return;     //prawa rotacja niemozliwa gdy nie ma lewego potomka
+    }
+    c = b->rightItem;    //prawy potomek prawego potomka wezla rotacji
+    /** Rotacja **/
+    b->rightItem = a;    //po rotacji A bedzie prawym potomkiem B
+    if(c!=NULL) {
+        c->parentItem = a;  //jezeli C nie jest NULL ustawiamy dla nowego rodzica dla tego wezla
+        a->leftItem = c; //po rotacji c bedzie prawym potomkiem dla A
+    }
+    else a->leftItem = NULL; //jezeli nie bylo C to po rotacji dla A prawego potomka nie bedzie
+    b->parentItem = parent;     //B teraz zamiast a wiec teraz b bedzie wskazywal na rodzica wezla rotacji
+    if(parent!=NULL) {  //jezeli A nie bylo korzeniem drzewa
+        if(parent->leftItem == a) { //sprawdzamy jakim potomkiem byl poczatkowy wezel rotacji
+            parent->leftItem = b;
+        }
+        else parent->rightItem = b;
+    }
+    a->parentItem = b;      //aktualizujemy rodzica A bo teraz jego rodzicem jest B
+    if(parent==NULL) {
+        root = b;   //jezeli A byl korzeniem to teraz po rotacji korzeniem bedzie B
+    }
+}
 
 void bstTree::showTree(nodeBST* root, long n) {
     if(root!=NULL)
