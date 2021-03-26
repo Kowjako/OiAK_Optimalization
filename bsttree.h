@@ -6,6 +6,7 @@
 #include <iostream>
 #include <random>
 #include <fstream>
+#include <math.h>
 
 /* Struktura opisujaca pojedynczy wezel drzewa */
 struct nodeBST {
@@ -22,6 +23,7 @@ class bstTree
     public:
         bstTree();
         virtual ~bstTree();
+        int counter = 0;
 
         nodeBST* root = NULL; //korzen drzewa
         void addValue(int value); //dodanie elementu do drzewa
@@ -33,6 +35,10 @@ class bstTree
         void showTree(nodeBST* startNode, long n); //funkcja wypisujaca drzewo w konsoli
         void readFromFile(string filename);  //funkcja wczytujaca drzewo z pliku.
 
+        void leftRotation(nodeBST* root);   //funkcja rotacji w lewo
+        void rightRotation(nodeBST* root);  //funkcja rotacji w prawo
+        void algorithmDSW();    //funkcja rownowazenia drzewa algorytmem DSW
+        void numberOfNodes(nodeBST* root); //funkcja pomocnicza dla algorytmu DSW
         void showInorder(nodeBST* root);    //przejscie drzewa metoda INORDER
         void showPreorder(nodeBST* root);   //przejscie drzewa metoda PREORDER
         void showPostorder(nodeBST* root);    //prejscie drzewa metoda PREORDER
