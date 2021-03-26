@@ -254,6 +254,51 @@ void bstTree::rightRotation(nodeBST* rotRoot) {
     }
 }
 
+void bstTree::algorithmDSW() {
+    /** Etap 1 - Prostowanie **/
+    nodeBST* startNode = root;
+    while(startNode!=NULL) {
+        if(startNode->leftItem!=NULL) {
+            rightRotation(startNode);
+            startNode = root;
+        }
+        else {
+            startNode = startNode->rightItem;
+        }
+    }
+    /** Etap 2 - Rownowazenie **/
+    numberOfNodes(root);
+    startNode = root;
+    nodeBST* nextNode = NULL;
+
+    int fullLevel = pow(2, log2(counter+1)) - 1; //m
+    int difference = counter - fullLevel; //n-m
+    while(difference!=0) {
+        nextNode = startNode->rightItem->rightItem;    //obliczamy wskaznik na co drugi element
+        leftRotation(startNode);        //robimy rotacje w lewo
+        startNode = nextNode;   //przechodzimy do nastepnego ktory jest co drugim
+        difference--;
+    }
+    startNode = root;
+    nextNode = NULL;
+    while(fullLevel>1) {
+        fullLevel = fullLevel/2;
+        for(int i=0;i<fullLevel;i++) {  //wykonujemy floor(m/2) rotacji w lewo
+            nextNode = startNode->rightItem->rightItem;    //obliczamy wskaznik na co drugi element
+            leftRotation(startNode);
+            startNode = nextNode;
+        }
+        startNode = root;  //po rotacjach aktualizujemy startNode na nowy korzen
+    }
+}
+
+void bstTree::numberOfNodes(nodeBST* root) {
+    if(root==NULL) return;
+    numberOfNodes(root->leftItem);
+    counter++;
+    numberOfNodes(root->rightItem);
+}
+
 void bstTree::showTree(nodeBST* root, long n) {
     if(root!=NULL)
     {
