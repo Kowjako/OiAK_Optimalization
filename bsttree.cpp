@@ -106,6 +106,90 @@ nodeBST* bstTree::findElement(int element) {
     }
 }
 
+nodeBST* bstTree::getMaxNode(nodeBST* parent) {
+    while(parent->rightItem!=NULL) {
+        parent = parent->rightItem;
+    }
+    return parent;
+}
+
+void bstTree::deleteVertex(int value) {
+    if(root == NULL) {
+        cout<<"Drzewo BST nie ma wierzcholku"<<endl;
+        return;
+    }
+    nodeBST* deletedNode = findElement(value);
+    if(deletedNode!=NULL) {
+        deletePtr(deletedNode);
+    }
+    else return;
+}
+
+void bstTree::deletePtr(nodeBST* deletedNode) {
+    if(deletedNode->leftItem!=NULL && deletedNode->rightItem!=NULL) { /* kasowany wezel ma dwoch potomkow */
+        nodeBST* maxLeftTreeNode = getMaxNode(deletedNode->leftItem); /* szukamy najwiekszy element w lewym potomnym drzewie */
+        deletedNode->value = maxLeftTreeNode->value; /*zamieniamy wartosc usuwanego wezla na najwiekszy element w lewym potomnym */
+        deletePtr(maxLeftTreeNode); /*kasujemy nawiekszy element w lewym potomnym drzewie rekursywnie */
+        return; /* wychodzimy z funkcji zeby nie byl usuniety poczatkowy element za pomoca ostatniej linijki  free(deletedNode)*/
+    }
+    else
+    {
+        if(deletedNode->leftItem!=NULL) { /* ma tylko potomka po lewej */
+            if(deletedNode==root) {
+                nodeBST* newRoot = deletedNode->leftItem;
+                free(root);
+                root = newRoot;
+                return;
+            }
+            else
+            {
+                if(deletedNode == deletedNode->parentItem->leftItem) { /* kasowany wezel jest dla rodzica lewym? */
+                    deletedNode->parentItem->leftItem = deletedNode->leftItem;
+                }
+                else deletedNode->parentItem->rightItem = deletedNode->leftItem;
+            }
+        }
+        else
+        {
+            if(deletedNode->rightItem!=NULL) { /* ma tylko potomka po prawej */
+                if(deletedNode==root) {
+                    nodeBST* newRoot = deletedNode->rightItem;
+                    free(root);
+                    root = newRoot;
+                    return;
+                }
+                else
+                {
+                    if(deletedNode == deletedNode->parentItem->rightItem) { /* kasowany wezel jest dla rodzica prawym? */
+                        deletedNode->parentItem->rightItem = deletedNode->rightItem;
+                    }
+                    else deletedNode->parentItem->leftItem = deletedNode->rightItem;
+                }
+            }
+            else /*przypadek gdy nie ma potomkow czyli jest wiszacym */
+            {
+                if(deletedNode==root) {
+                    free(root);
+                    root = NULL;
+                    return;
+                }
+                else {
+                    if(deletedNode == deletedNode->parentItem->leftItem) { /*wiszacy wezel jest lewym odnosnie rodzica ? */
+                        deletedNode->parentItem->leftItem = NULL;
+                    }
+                    else
+                    {
+                        deletedNode->parentItem->rightItem = NULL;
+                    }
+                }
+            }
+        }
+    }
+    free(deletedNode);
+}
+
+void
+
 void bstTree::showTree(nodeBST* root, long n) {
     if(root!=NULL)
     {
