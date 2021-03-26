@@ -82,6 +82,30 @@ void bstTree::addValue(int value) {
     }
 }
 
+nodeBST* bstTree::findElement(int element) {
+    if(root==NULL) {
+        return NULL;
+    }
+    else
+    {
+        nodeBST* tmpNode = root;
+        while(tmpNode!=NULL) {
+            if(element > tmpNode->value) {
+                tmpNode = tmpNode->rightItem;
+            }
+            else
+            {
+                if(element<tmpNode->value) tmpNode = tmpNode->leftItem;
+                    else
+                    {
+                        return tmpNode;
+                    }
+            }
+        }
+        return NULL;
+    }
+}
+
 void bstTree::showTree(nodeBST* root, long n) {
     if(root!=NULL)
     {
