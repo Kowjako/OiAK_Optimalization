@@ -81,3 +81,34 @@ void bstTree::addValue(int value) {
         }
     }
 }
+
+void bstTree::showTree(nodeBST* root, long n) {
+    if(root!=NULL)
+    {
+      showTree(root->rightItem, n+5);
+      for (long i=0;i<n;i++) printf(" ");
+      printf("%d\n", root->value);
+      showTree(root->leftItem, n+5);
+    }
+}
+
+void bstTree::showInorder(nodeBST* root) {
+    if(root==NULL) return;
+    showInorder(root->leftItem);
+    cout<<root->value<<" ";
+    showInorder(root->rightItem);
+}
+
+void bstTree::showPreorder(nodeBST* root) {
+    if(root==NULL) return;
+    cout<<root->value<<" ";
+    showPreorder(root->leftItem);
+    showPreorder(root->rightItem);
+}
+
+void bstTree::showPostorder(nodeBST* root) {
+    if(root==NULL) return;
+    showPostorder(root->leftItem);
+    showPostorder(root->rightItem);
+    cout<<root->value<<" ";
+}
