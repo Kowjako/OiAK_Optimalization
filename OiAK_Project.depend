@@ -1,4 +1,23 @@
 # depslib dependency file v1.0
-1584205420 source:d:\codeblocks\projekt\oiak_project\main.cpp
+1621766201 source:d:\codeblocks\projekt\oiak_project\main.cpp
+	<stdio.h>
+	<cstdlib>
+	<stdlib.h>
 	<iostream>
+	<random>
+	<stdlib.h>
+	<iomanip>
+	<windows.h>
+	"bsttree.h"
+
+1616773763 source:d:\codeblocks\projekt\oiak_project\bsttree.cpp
+	"bsttree.h"
+
+1616772505 d:\codeblocks\projekt\oiak_project\bsttree.h
+	<stdio.h>
+	<stdlib.h>
+	<iostream>
+	<random>
+	<fstream>
+	<math.h>
 
